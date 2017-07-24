@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/toastr/build/toastr.min.css">
+</head>
+<body>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <button class="btn btn-link" id="post" data-bind="click: addNewUser ">Add new user
+                <i class="glyphicon glyphicon-plus"></i>
+                </button>
+                <button class="btn btn-danger" data-bind="click: deleteUser, enable: removeSelectedUser">Remove</button>
+            </div>
+            <ul class="list-group" data-bind="foreach: users">
+                <li class="list-group-item clearfix" data-bind="click: $parent.editUser, css: {active: $parent.selectedUser() && $parent.selectedUser().id === $data.id }">
+                    <div href="#" class="thumbnail pull-left" style="margin-right: 5px">
+                        <img  data-bind="attr:{src: photo}">
+                    </div>
+                    <h3 data-bind="text: fullName" style="font-weight: bold"></h3>
+                    <small data-bind="text: country"></small>
+                </li>
+            </ul>
+            <nav class="panel-footer">
+                <ul class="pagination">
+                    <li data-bind="css: { disabled: currentPage() === 1 }">
+                        <a href="#" data-bind=" click: goToPrevPage">
+                        <i class="glyphicon glyphicon-arrow-left"></i>
+                        </a>
+                    </li>
+
+                    <!-- ko foreach: pageNumbers -->
+                    <li data-bind="css: {active: $parent.currentPage()=== $data}">
+                        <a href="#" data-bind="text: $data, click: $parent.goToPage">
+                            </a>
+                    </li>
+                    <!--/ko-->
+                    <li data-bind="css: { disabled: currentPage()=== totalPages() }">
+                        <a href="#" data-bind="click: goToNextPage">
+                            <i class="glyphicon glyphicon-arrow-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="col-xs-8">
+        <form action="#" id="form" data-bind="with: selectedUser(), submit: handleSaveUser" name="form">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="row form-group">
+                    <label  class="col-xs-4 form-label">Фото</label>
+                <div class="col-xs-8">
+                    <img  data-bind="attr:{src: photo}" id="photo">
+                </div>
+            </div>
+                        <div class="row form-group">
+                            <label for="fullName" class="col-xs-4 form-label">Імя</label>
+                            <div class="col-xs-8">
+                                <input type="text" id="fullName"
+                                       class="form-control"
+                                       data-bind="value: fullName">
+                            </div>
+                        </div>
+                    <div class="row form-group">
+                        <label for="address" class="col-xs-4 form-label">Адреса</label>
+                            <div class="col-xs-8">
+                            <input type="text" id="address"
+                                   class="form-control"
+                                   data-bind="value: address">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="birthday" class="col-xs-4 form-label">День нароження</label>
+                        <div class="col-xs-8">
+                            <input type="text" id="birthday"
+                                   class="form-control"
+                                   data-bind="value: birthday">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="email" class="col-xs-4 form-label">Е-mail</label>
+                        <div class="col-xs-8">
+                            <input type="text" id="email"
+                                   class="form-control"
+                                   data-bind="value: email">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="profession" class="col-xs-4 form-label">Професія</label>
+                        <div class="col-xs-8">
+                            <input type="text" id="profession"
+                                   class="form-control"
+                                   data-bind="value: profession">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                    <label for="country" class="col-xs-4 form-label">Країна</label>
+                    <div class="col-xs-8">
+                        <select  id="country"
+                                 class="form-control"
+                                 name="country"
+                                 data-bind="options: $parent.countries, value: country">
+                        </select>
+                    </div>
+                </div>
+                    <div class="row form-group">
+                        <label for="fullInfo" class="col-xs-4 form-label">Повна інформація</label>
+                        <div class="col-xs-8">
+                            <textarea type="text" id="fullInfo"
+                                   class="form-control"
+                                      data-bind="value: fullInfo" rows="10" cols="15">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="shortInfo" class="col-xs-4 form-label">Коротка інформація</label>
+                        <div class="col-xs-8">
+                            <textarea type="text" id="shortInfo"
+                                      class="form-control"
+                                      data-bind="value: shortInfo" rows="7" cols="15">
+                            </textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="row btn-group">
+                        <button class="btn btn-primary" id="save">
+                            Update
+                            <i class="glyphicon glyphicon-floppy-save"></i>
+                        </button>
+                        <button class="btn btn-link" data-bind="click: $parent.cancelForm">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/toastr/build/toastr.min.js"></script>
+<script src="node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

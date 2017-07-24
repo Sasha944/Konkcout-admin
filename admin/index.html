@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/toastr/build/toastr.min.css">
+</head>
+<body>
+
+<table class="table table-hover" data-bind="ifnot: selectedUser()" >
+    <tr style="font-weight: bold; ">
+        <td>Постер</td>
+        <td>Імя</td>
+        <td>Країнак</td>
+        <td>Адреса</td>
+        <td>Опції</td></tr>
+    <!-- ko foreach: users -->
+    <tr style="background: LightSkyBlue ">
+        <td>
+            <img src="" style="max-width: 100px;max-height: 100px;" data-bind="attr:{src: photo}">
+        </td>
+        <td data-bind="text: fullName"></td>
+        <td data-bind="text: country"></td>
+        <td data-bind="text: address" style="max-width: 450px;"></td>
+        <td data-bind ="click: $parent.editUserArticles"><div class="btn btn-group" >
+            <button class="btn btn-primary" >
+                <i class="glyphicon glyphicon-pencil" ></i>
+            </button>
+        </div></td>
+    </tr>
+    <!--/ko-->
+</table>
+<div data-bind="with: selectedUser()" id="articlesUser">
+<table class="table table-hover" data-bind="ifnot: $parent.selectedArticles()" >
+    <caption>
+    <tr style="font-weight: bold; ">
+        <td>Постер</td>
+        <td>Імя</td>
+        <td>Заголовок</td>
+        <td>Короткий опис</td>
+        <td> Опції</td>
+        <
+    </tr>
+         <!-- ko foreach: $parent.articles-->
+    <tr style="background: LightSkyBlue ">
+    <td>
+        <img src="" alt="" data-bind="attr:{src: thumbnail}" style="width: 100px;height: 100px;">
+        </td>
+        <td data-bind="text: authorFullName" style="font-weight: bold;"></td>
+        <td data-bind="text: title"></td>
+        <td data-bind="text: shortContent" style="max-width: 400px;"></td>
+        <td >
+            <div class="btn btn-group">
+            <button data-bind="click: $root.removeArticles" class="btn btn-danger">Remove
+            <i class="glyphicon glyphicon-trash"></i></button>
+                <button class="btn btn-primary" data-bind="click: $root.editArticles">Edit
+                <i class="glyphicon glyphicon-pencil"></i></button>
+                <button class="btn btn-success" data-bind="click: $root.postArticles">Створити нову</button>
+            </div>
+        </td>
+    </tr>
+    <!--/ko-->
+    </caption>
+</table>
+</div>
+<div class="forDataBind container" data-bind="with: selectedUser(),with: selectedArticles()">
+    <form action="" data-bind="submit: $parent.handleSaveArticles">
+        <div class="row">
+            <div class="col-xs-4" style="margin-left: 20px;">
+                <div>
+                <span style="font-weight: bold;display: block;">Постер</span>
+                    <button class="btn btn-link" style="display: block;padding-left: 0">Змінити</button><img src="" alt="" data-bind="attr:{src: thumbnail}" style="display: block;max-width: 200px;max-height: 200px;">
+            </div>
+
+            </div>
+            <div class="col-xs-8 row">
+                <div class="form-group row">
+                    <label for="caption" class="col-xs-3">Заголовок</label>
+                    <div class="col-xs-9">
+                        <input type="text" id="caption" class="form-control" data-bind="value: title">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="container-fluid form-group">
+            <label for="shortInfo" style="padding-left: 0;">Короткий опис статті</label>
+
+            <textarea name="" id="shortInfo" cols="10" rows="5" class="form-control" data-bind="value: shortContent" ></textarea>
+        </div>
+        <div class="container-fluid form-group">
+                <label for="content">Стаття:</label>
+                    <textarea name="" id="content" cols="30" rows="20" class="form-control" data-bind="value: content"></textarea>
+        </div>
+        <div class="container-fluid btn-group">
+            <button class="btn btn-primary">Save
+                <i class="glyphicon glyphicon-floppy-save"></i></button>
+            <button class="btn btn-link" data-bind="click: $parent.goBackPage">Go back</button>
+        </div>
+    </form>
+</div>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/toastr/build/toastr.min.js"></script>
+<script src="../node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../js/adminJS/main.js"></script>

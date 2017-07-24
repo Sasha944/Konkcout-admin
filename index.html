@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" data-bind="ifnot: selectedArticles()">
+    <div class="container-fluid" data-bind="foreach: articles">
+        <legend><h2 data-bind="text: title"></h2></legend>
+        <div>
+            <img src="" data-bind="attr:{src: thumbnail}" style="max-width: 200px;height:200px;border-radius: 50%">
+        </div>
+        <small data-bind="text: shortContent"></small>
+
+        <button class="btn btn-link" style="display: block;text-align: left;font-size: 18px;"
+                data-bind="click:$parent.clickArticles">Показати всю статтю
+        </button>
+        <h5 data-bind="text: authorFullName" style="margin-top: 2px;font-weight: bold;"></h5>
+    </div>
+    <div>
+        <ul class="pagination" >
+            <li data-bind="css:{disabled: currentPage()===1}">
+                <a href="" data-bind="click: goToPrevPage">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                </a>
+            </li>
+        <!-- ko foreach: pageNumbers -->
+            <li data-bind="css:{active: $parent.currentPage()===$data}">
+                <a href="" class="btn btn-" data-bind="text: $data, click: $parent.nextPage"></a>
+            </li>
+        <!--/ko-->
+            <li data-bind="css:{disabled: currentPage()===totalPages()}">
+                <a href="" data-bind="click: goToNextPage">
+                    <i class="glyphicon glyphicon-arrow-right"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container" data-bind="with: selectedArticles()" style="margin-top: 30px;margin-bottom: 100px;">
+    <div id="articleEdit" style="border-radius:6px;background: white;padding:40px;padding-top:0px">
+        <div class="row">
+            <a href="index.html">
+                <img src="images/blog11.jpg" alt="" style=";max-width: 250px;max-height: 150px;margin-left: 50px;">
+            </a>
+            <h2 class="col-xs-12 header" data-bind="text: title" style="font-weight: bold;">
+            </h2>
+            <div class="col-xs-12 main__marg">
+                <img src="" alt="" class="thumbnail center-block" data-bind="attr: {src:thumbnail}" style="max-width: 600px;max-height: 400px">
+            </div>
+            <div class="col-xs-12 main__text" data-bind="text: content" style="text-align: justify;text-shadow: 0 0.5px silver">
+            </div>
+            <div class="col-xs-6 main__marg">
+            <span class="main__text--small">
+                <small style="display: inline-block;margin-left: 15px;font-weight: bold;margin-top: 40px;">Author:</small>
+                <h4 data-bind="text: authorFullName" style="font-family: sans-serif;margin-left: 15px;font-weight: bold;"></h4>
+            </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/knockout/build/output/knockout-latest.debug.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/clientJS/clientMain.js"></script>
+</body>
+</html>
